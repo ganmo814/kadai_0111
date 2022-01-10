@@ -1,0 +1,113 @@
+
+header{
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+main{
+    border-bottom:1px solid #ccc;
+    margin-bottom: 50px;
+    font-size: 100px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* ルーレット関連 */
+.display {
+    position: relative;
+    margin-top: 100px;
+    margin-left: 100px;
+    width: 1150px;
+    height: 300px;
+    margin: auto;
+}
+
+.roulette {
+    display: block;
+    width: 1150px;
+    margin: auto;
+    position: relative;
+    transform: translate(-50px, 0px);
+}
+
+#roulette1 {
+    transform: translate(30px, 50px);
+}
+#roulette2 {
+    transform: translate(30px, -15px);
+}
+#roulette3 {
+    transform: translate(55px, -70px);
+}
+#roulette4 {
+    transform: translate(40px, -70px);
+}
+#roulette5 {
+    transform: translate(40px, -45px);
+}
+#roulette6 {
+    transform: translate(90px, -65px);
+}
+#roulette7 {
+    transform: translate(150px, -60px);
+}
+#roulette8 {
+    transform: translate(90px, -10px);
+}
+
+div.item {
+    position: absolute;
+}
+
+/* ボタン装飾 */
+.btn{
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    color: white;
+    border-radius: 50%;
+    border-width: 10px;
+    box-shadow: 5px 10px 1px rgba(0, 0, 0, 0.9);
+} 
+
+button:hover{
+    background-color:white;
+}
+
+button:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(8px); 
+    transform: translateY(8px);/*下に動く*/
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.9);/*影を小さく*/
+    border-bottom: none;
+} 
+
+footer{
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+
+p{
+    text-align: center;
+    height: 600px;
+    margin-bottom: 150px;
+    transform: translate(0px,-65px);
+    font-size: 30px;
+}
+ul{
+    display:table;  /* 定義 */
+    table-layout: fixed;
+    width:100%;
+    margin-bottom: 50px;
+    transform: translate(-35px, 0px);
+}
+li{
+    text-align: center;
+    list-style-type:none;
+    background-color: white;
+    display:table-cell;  /* 定義 */
+    cursor: pointer;
+}

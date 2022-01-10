@@ -1,0 +1,125 @@
+
+header{
+    width: 1100px;
+    text-align: center;
+    margin: auto;
+}
+
+main{
+    width: 1100px;
+    font-size: 50px;
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+}
+
+#roulette{
+    position: absolute;
+    top: 49px;
+    left: 307px;
+}
+
+#comp_hand{
+    position: absolute;
+    top: 200px;
+    left: 446px;
+}
+
+.display_top {
+    position: relative;
+    width: 1100px;
+    height: 500px;
+    margin: 0px;
+}
+
+.display_middle{
+    position: relative;
+    width: 1100px;
+    margin: 0px;
+}
+
+.display_bottom{
+    position: relative;
+    width: 1100px;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ボタン装飾 */
+
+#start_btn{
+    height: 70px;
+    width: 200px;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    border-radius: 5%;
+    margin-right: 80px;
+}
+
+.btn{
+    position: relative;
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0em 0em;
+    text-decoration: none;
+    color: white;
+    border-radius: 50%;
+    border-width: 3px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.9);
+    transform: translate(250px, 60px);
+} 
+
+button.btn:hover{
+    background-color:white;
+}
+
+button.btn:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(3px); 
+    transform: translateY(3px);/*下に動く*/
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.9);/*影を小さく*/
+    border-bottom: none;
+    transform: translate(250px, 60px);
+} 
+
+.record {
+    width: 1100px;
+    position: absolute;
+    border-width: 1px;
+    border-color: gray;
+    transform: translate(275px,-600px);
+}
+
+.medal_control{
+    font-size: 30px;
+    color: red;
+}
+
+footer{
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+
+p{
+    position: relative;
+    text-align: center;
+    height: 0px;
+    transform: translate(-70px,-470px);
+    font-size: 30px;
+}
+ul{
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+li{
+    list-style-type: none;
+    padding-left: 13px;
+    padding-right: 15px;
+    transform: translate(150px,-172px);
+}

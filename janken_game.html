@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/janken_game.css">
+<title>じゃんけん</title>
+</head>
+<body>
+
+<!-- 音声 -->
+<audio src="sound/s_janken.wav" id="s_janken" preload="auto"></audio>
+<audio src="sound/s_pon.wav" id="s_pon" preload="auto"></audio>
+<audio src="sound/s_fever.wav" id="s_fever" preload="auto"></audio>
+<audio src="sound/s_aikode.wav" id="s_aikode" preload="auto"></audio>
+<audio src="sound/s_sho.wav" id="s_sho" preload="auto"></audio>
+<audio src="sound/s_make.wav" id="s_make" preload="auto"></audio>
+<!-- 音声 -->
+
+<!-- <header>
+  <h1>じゃんけんメダルゲーム</h1>
+</header> -->
+
+<main>
+  <canvas id="roulette" width="500" height="500"></canvas>
+  <div class="display_top">
+    <img src="img/game_top_r.png" height="500" width="500"alt="筐体">
+  </div>
+  
+  <img src="img/gu_dot.png" id="comp_hand">
+
+<!-- 過去の出し手、勝敗履歴のデータ挿入 -->
+<!-- <table id="record" class="record"></table> -->
+
+  <div class="display_middle">
+    <img src="img/game_middle.png" width="500" alt="操作エリア">
+  </div>
+  
+  <ul>
+    <li><button type="button" id="gu_btn" class="btn"><img src="img/gu_btn.png" art="グーボタン" height="50"></button></li>
+    <li><button type="button" id="cho_btn" class="btn"><img src="img/cho_btn.png" art="チョキボタン" height="50"></button></li>
+    <li><button type="button" id="par_btn" class="btn"><img src="img/par_btn.png" art="パーボタン" height="50"></button></li>
+  </ul>
+  <div class="medal_control" id="get_medal"></div>
+  <div class="medal_control" id="rest_medal"></div>
+
+
+  <div class="display_bottom">
+    <button type="button" id="start_btn">スタート！</button>
+    <div id="judgement" style="width: 200px; height: 70px;"></div>
+  </div>
+  
+
+</main>
+
+<script type="text/javascript">
+//Canvas 図形描画
+  const can = $("#roulette")[0];
+  const ctx = can.getContext("2d");
+
+  function arc (ctx, x = 0, y = 0, r = 0, b  = 0, e = 0, l = 1, o = 0, s = 0, c = '#0f0') {
+  const { PI, sin, cos } = Math, deg = PI / 180;
+  let cx = x + sin ((b + e)*.5 * deg) * o,
+      cy = y - cos ((b + e)*.5 * deg) * o,
+      bd = (b-90) * deg,
+      ed = (e-90) * deg;
+
+  ctx.beginPath ();
+  ctx.lineWidth = l;
+  ctx.strokeStyle = c;
+  ctx.arc (cx, cy, r, ed, bd, true);
+  ctx.stroke();
+  }
+
+  const data = [
+    [ctx, 250, 250, 120, -22.5, 22.5, 50, 8, 20, 'rgb(255,59,59)'],
+    [ctx, 250, 250, 120, 22.5, 67.5, 50, 8, 1, 'white'],
+    [ctx, 250, 250, 120, 67.5, 112.5, 50, 8, 4, 'rgb(255,59,59)'],
+    [ctx, 250, 250, 120, 112.5, 157.5, 50, 8, 2, 'white'],
+    [ctx, 250, 250, 120, 157.5, 202.5, 50, 8, 5, 'rgb(255,59,59)'],
+    [ctx, 250, 250, 120, 202.5, 247.5, 50, 8, 1, 'white'],
+    [ctx, 250, 250, 120, 247.5, 292.5, 50, 8, 4, 'rgb(255,59,59)'],
+    [ctx, 250, 250, 120, 292.5, 337.5, 50, 8, 2, 'white'],
+  ];
+  
+  data.forEach (dt=> arc(...dt));
+  // ctx.font = "";
+  // ctx.textBaseline = "";
+  // ctx.strokeText();
+  
+
+//自分の出し手を選択した際のアクション
+  let my_hand = 0;
+  let comp_hand = 0;
+  let keynumber = 0;
+  const shuffleImgs = ['img/gu_dot.png','img/cho_dot.png','img/par_dot.png'] ;
+  let num = 0;
+
+    function startShuffleImg(){
+      shuffleTimer = setInterval(function(){
+        $("#comp_hand").attr("src", shuffleImgs[num]);
+        if( num == 2 ) {
+        // カウンタが画像数よりも大きくなったら0番に戻す
+        num = 0;
+        } else {   
+        // カウンタを1増やす
+        num++;
+        }
+        }, 50);
+    }
+
+    function stopShuffleImg(){
+      clearInterval(shuffleTimer);
+      $("#comp_hand").removeAttr("src");
+    }
+
+  $("#start_btn").on("click", function(){
+    startShuffleImg();
+    $("#s_janken").get(0).play();
+    $("#gu_btn, #cho_btn, #par_btn").prop("disabled", false);
+    $("#start_btn").html("次のゲーム");
+
+    $("#gu_btn").on("click", function(){ 
+      my_hand = 0;
+      stopShuffleImg();
+      $("#s_pon").get(0).play();
+      choose_comp_hand();
+      judgement_result();
+      // record_display();
+      // deleteTableRow();
+      // console.log(my_hand);
+    });
+    $("#cho_btn").on("click", function(){ 
+      my_hand = 1;
+      stopShuffleImg();
+      $("#s_pon").get(0).play();
+      choose_comp_hand();
+      judgement_result();
+      // record_display();
+      // deleteTableRow();
+      // console.log(my_hand);
+    });
+    $("#par_btn").on("click", function(){ 
+      my_hand = 2;
+      stopShuffleImg();
+      $("#s_pon").get(0).play();
+      choose_comp_hand();
+      judgement_result();
+      // record_display();
+      // deleteTableRow();
+      // console.log(my_hand);
+    });
+
+  });
+  
+  function choose_comp_hand(){
+    // 相手の出し手の表示処理
+    comp_hand = Math.floor(Math.random()*3);
+    let view ="";   
+    if(comp_hand == 0){
+      view = shuffleImgs[comp_hand];
+    } else if(comp_hand == 1) {
+        view = shuffleImgs[comp_hand];
+    } else if(comp_hand == 2) {
+        view = shuffleImgs[comp_hand];
+    }    
+    // console.log(comp_hand);
+    $("#comp_hand").attr("src", view);
+  }
+
+  function judgement_result(){
+    // 結果判定
+    let result ="";
+    if(my_hand == comp_hand){
+        result ="あいこ";
+        startShuffleImg();
+        $("#s_aikode").get(0).play();
+    } else if((my_hand + 1) % 3 == comp_hand) {
+        result ="勝ち";
+        $("#s_fever").get(0).play();
+        $("#gu_btn, #cho_btn, #par_btn").prop("disabled", true);
+    } else {
+        result ="負け";
+        $("#s_make").get(0).play();
+        $("#gu_btn, #cho_btn, #par_btn").prop("disabled", true);
+    }   
+    $("#judgement").html(result)
+    // console.log(result);
+  }
+
+  //ルーレットのコード
+  function roulette(){
+    roulette_num = Math.floor(Math.random()*8);
+    for(let i = 0; i < 20; i++){
+      $("data[roulette_num]")
+      
+
+    }
+  }
+
+  // 対戦相手出し手の履歴表示
+  // function record_display(){
+  //   keynumber = Math.ceil(Math.random()*100);
+  //   localStorage.setItem(keynumber, comp_hand);
+  //   let view ="";
+  //   if(comp_hand == 0){
+  //     view = '<img src="gu.png" height="75" width="75">';
+  //   } else if(comp_hand == 1) {
+  //       view = '<img src="cho.png" height="75" width="75">';
+  //   } else if(comp_hand == 2) {
+  //       view = '<img src="par.png" height="75" width="75">';
+  //   }    
+  //   const html ='<tr><th>'+view+'</th></tr>';
+  //   $("#record").append(html);
+  // }
+
+  // function deleteTableRow(){
+  //   row_num = $("#record tr").children().length;
+  //   if(row_num>5){
+  //   $("#record tr").eq(0).remove();
+  //   }
+  // }
+  
+</script>
+</body>
+</html>
