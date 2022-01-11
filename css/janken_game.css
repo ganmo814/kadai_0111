@@ -6,43 +6,33 @@ header{
 }
 
 main{
-    width: 1100px;
+    width: 600px;
     font-size: 50px;
     text-align: center;
     font-weight: bold;
     margin: auto;
 }
 
+#top_image{
+    position: relative;
+    z-index: 3;
+}
+
 #roulette{
-    position: absolute;
-    top: 49px;
-    left: 307px;
+    position: relative;
+    top: -1044px;
+    left: -1px;
+    z-index: 2;
 }
 
 #comp_hand{
-    position: absolute;
-    top: 200px;
-    left: 446px;
-}
-
-.display_top {
-    width: 1100px;
-    height: 500px;
-    margin: 0px;
-}
-
-#top_image{
     position: relative;
-}
-
-.display_middle{
-    width: 1100px;
-    margin: 0px;
+    top: -673px;
+    left: -4px;
+    z-index: 1;
 }
 
 .display_bottom{
-    width: 1100px;
-    height: 100px;
     margin: auto;
     display: flex;
     align-items: center;
@@ -71,7 +61,7 @@ main{
     border-radius: 50%;
     border-width: 3px;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.9);
-    transform: translate(250px, 60px);
+    transform: translate(0px, 60px);
 } 
 
 button.btn:hover{
@@ -84,7 +74,7 @@ button.btn:active {
     transform: translateY(3px);/*下に動く*/
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.9);/*影を小さく*/
     border-bottom: none;
-    transform: translate(250px, 60px);
+    transform: translate(0px, 60px);
 } 
 
 .record {

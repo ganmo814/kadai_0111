@@ -23,19 +23,8 @@
 </header> -->
 
 <main>
-  <canvas id="roulette" width="500" height="500"></canvas>
-  <div class="display_top">
-    <img src="img/game_top_r.png" id="top_image" height="500" width="500"alt="筐体">
-  </div>
-  
-  <img src="img/gu_dot.png" id="comp_hand">
-
-<!-- 過去の出し手、勝敗履歴のデータ挿入 -->
-<!-- <table id="record" class="record"></table> -->
-
-  <div class="display_middle">
-    <img src="img/game_middle.png" width="500" alt="操作エリア">
-  </div>
+  <img src="img/game_top_r.png" id="top_image" height="500" width="500"alt="筐体">  
+  <img src="img/game_middle.png" width="500" alt="操作エリア">
   
   <ul>
     <li><button type="button" id="gu_btn" class="btn"><img src="img/gu_btn.png" art="グーボタン" height="50"></button></li>
@@ -50,7 +39,13 @@
     <button type="button" id="start_btn">スタート！</button>
     <div id="judgement" style="width: 200px; height: 70px;"></div>
   </div>
+
+  <img src="img/gu_dot.png" id="comp_hand">
+  <canvas id="roulette" width="500" height="500"></canvas>
+
   
+<!-- 過去の出し手、勝敗履歴のデータ挿入 -->
+<!-- <table id="record" class="record"></table> -->
 
 </main>
 
