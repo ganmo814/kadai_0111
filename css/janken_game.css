@@ -33,13 +33,11 @@ main{
 }
 
 .display_middle{
-    position: relative;
     width: 1100px;
     margin: 0px;
 }
 
 .display_bottom{
-    position: relative;
     width: 1100px;
     height: 100px;
     margin: auto;
