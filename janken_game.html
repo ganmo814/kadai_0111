@@ -23,7 +23,7 @@
 </header> -->
 
 <main>
-  <img src="img/game_top_r.png" id="top_image" height="500" width="500"alt="筐体">  
+  <img src="img/game_top_r1.png" id="top_image" height="500" width="500"alt="筐体">  
   <img src="img/game_middle.png" width="500" alt="操作エリア">
   
   <ul>
@@ -31,19 +31,24 @@
     <li><button type="button" id="cho_btn" class="btn"><img src="img/cho_btn.png" art="チョキボタン" height="50"></button></li>
     <li><button type="button" id="par_btn" class="btn"><img src="img/par_btn.png" art="パーボタン" height="50"></button></li>
   </ul>
-  <div class="medal_control" id="get_medal"></div>
-  <div class="medal_control" id="rest_medal"></div>
 
 
   <div class="display_bottom">
     <button type="button" id="start_btn">スタート！</button>
-    <div id="judgement" style="width: 200px; height: 70px;"></div>
+    <div id="judgement" style="width: 125px; height: 70px;"></div>
+
+    <div class="medal_control" id="get_medal" style="width: 140px"></div>
+    <div class="medal_control" id="rest_medal" style="width: 100px"></div>
   </div>
+
+
 
   <img src="img/gu_dot.png" id="comp_hand">
   <canvas id="roulette" width="500" height="500"></canvas>
 
-  
+  <img src="img/get_medal.png" height="60px" id="img_get_medal">
+  <img src="img/rest_medal.png" height="60px" id="img_rest_medal">
+
 <!-- 過去の出し手、勝敗履歴のデータ挿入 -->
 <!-- <table id="record" class="record"></table> -->
 
@@ -84,7 +89,33 @@
   // ctx.textBaseline = "";
   // ctx.strokeText();
   
+  // メダル増減処理
+  let bet_medal = -1;
+  let get_medal = 0;
+  let rest_medal = 10;
+  $("#rest_medal").html(rest_medal);
 
+  //勝利時に獲得できるメダル枚数計算
+  const winner_prizes = [1,1,2,2,4,4,5,20];
+  // console.log(winner_prizes);
+
+  function selectPrizes(){
+    let i = Math.floor(Math.random() * winner_prizes.length);
+    get_medal = winner_prizes[i];
+    $("#get_medal").html(get_medal);
+    
+    rest_medal += get_medal;
+    console.log(rest_medal);
+    $("#rest_medal").html(rest_medal);
+  }
+
+  function medalCal(){
+    rest_medal += bet_medal;
+    console.log(rest_medal);
+    $("#rest_medal").html(rest_medal);    
+  }
+  
+  
 //自分の出し手を選択した際のアクション
   let my_hand = 0;
   let comp_hand = 0;
@@ -110,11 +141,15 @@
       $("#comp_hand").removeAttr("src");
     }
 
-  $("#start_btn").on("click", function(){
-    startShuffleImg();
-    $("#s_janken").get(0).play();
-    $("#gu_btn, #cho_btn, #par_btn").prop("disabled", false);
-    $("#start_btn").html("次のゲーム");
+    $("#gu_btn, #cho_btn, #par_btn").prop("disabled", true);
+
+    $("#start_btn").on("click", function(){
+      startShuffleImg();
+      $("#s_janken").get(0).play();
+      $("#gu_btn, #cho_btn, #par_btn").prop("disabled", false);
+      $("#start_btn").html("次のゲーム");
+      medalCal();
+    });
 
     $("#gu_btn").on("click", function(){ 
       my_hand = 0;
@@ -146,8 +181,6 @@
       // deleteTableRow();
       // console.log(my_hand);
     });
-
-  });
   
   function choose_comp_hand(){
     // 相手の出し手の表示処理
@@ -174,6 +207,7 @@
     } else if((my_hand + 1) % 3 == comp_hand) {
         result ="勝ち";
         $("#s_fever").get(0).play();
+        selectPrizes();
         $("#gu_btn, #cho_btn, #par_btn").prop("disabled", true);
     } else {
         result ="負け";
@@ -185,15 +219,14 @@
   }
 
   //ルーレットのコード
-  function roulette(){
-    roulette_num = Math.floor(Math.random()*8);
-    for(let i = 0; i < 20; i++){
-      $("data[roulette_num]")
-      
-
-    }
-  }
-
+  // function roulette(){
+  //   roulette_num = Math.floor(Math.random()*8);
+  //   for(let i = 0; i < 20; i++){
+  //     $("data[roulette_num]")
+  //   }
+  // }
+  
+  
   // 対戦相手出し手の履歴表示
   // function record_display(){
   //   keynumber = Math.ceil(Math.random()*100);

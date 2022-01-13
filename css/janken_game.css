@@ -32,7 +32,29 @@ main{
     z-index: 1;
 }
 
+#judgement{
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0px;
+}
+
+#img_get_medal{
+    position: relative;
+    top: -810px;
+    left: 162px;
+    margin-right: 10px;
+}
+
+#img_rest_medal{
+    position: relative;
+    top: -810px;
+    left: 120px;
+}
 .display_bottom{
+    font-size: 24px;
     margin: auto;
     display: flex;
     align-items: center;
@@ -43,12 +65,12 @@ main{
 
 #start_btn{
     height: 70px;
-    width: 200px;
-    font-size: 30px;
+    width: 165px;
+    font-size: 26px;
     font-weight: bold;
     color: black;
     border-radius: 5%;
-    margin-right: 80px;
+    margin-right: 0px;
 }
 
 .btn{
@@ -86,8 +108,9 @@ button.btn:active {
 }
 
 .medal_control{
-    font-size: 30px;
-    color: red;
+    font-size: 36px;
+    font-weight: bold;
+    color:black;
 }
 
 footer{
